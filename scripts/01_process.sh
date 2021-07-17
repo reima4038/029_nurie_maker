@@ -26,15 +26,12 @@ function preprocessing() {
 
 function process() {
   # $1: process_name
-  ./$1.sh ${input_file} ${output_file}
-  cp ${output_file} ${dist_dir}${filename}$1${ext}
-  read -p "$1 processing is done."
-}
-
-function process_single_arg() {
-  # $1: process_name
-  # #2: argument
-  ./$1.sh $2 ${input_file} ${output_file}
+  # プロセス名以外に引数があればパラメータとして渡す
+  if test $# -gt 1 ; then
+    ./$1.sh ${input_file} ${output_file} ${@:2} 
+  else 
+    ./$1.sh ${input_file} ${output_file}
+  fi 
   cp ${output_file} ${dist_dir}${filename}$1${ext}
   read -p "$1 processing is done."
 }
@@ -50,7 +47,7 @@ preprocessing
 
 process 'gaussian'
 process 'edge'
-process_single_arg 'binarization' $BINARIZATION_THRESHOLD
+process 'binarization' $BINARIZATION_THRESHOLD
 process 'morphology'
 process 'crop'
 process 'ext_convert'
