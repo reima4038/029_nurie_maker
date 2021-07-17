@@ -1,14 +1,13 @@
 #!/bin/sh
-
-# properties
-binarization_threshold='40000'
-target_file_name='karas_logo_02.jpg'
+source ./config.properties
 
 # def
+target_file_name=$TARGET_FILE_NAME
 org_dir='../org/'
 dist_dir='../dist/'
 filename=${target_file_name%.*}
 ext=.${target_file_name##*.}
+
 
 org_file=${org_dir}${filename}${ext}
 input_file=${dist_dir}${filename}${ext}
@@ -51,7 +50,7 @@ preprocessing
 
 process 'gaussian'
 process 'edge'
-process_single_arg 'binarization' ${binarization_threshold}
+process_single_arg 'binarization' $BINARIZATION_THRESHOLD
 process 'morphology'
 process 'crop'
 process 'ext_convert'
