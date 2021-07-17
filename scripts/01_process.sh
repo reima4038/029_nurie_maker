@@ -2,13 +2,13 @@
 
 # properties
 binarization_threshold='40000'
-target_file_name='karas_mascot'
+target_file_name='karas_logo_02'
 
 # def
 org_dir='../org/'
 dist_dir='../dist/'
 
-ext='.png'
+ext='.jpg'
 
 org_file=${org_dir}${target_file_name}${ext}
 input_file=${dist_dir}${target_file_name}${ext}
@@ -43,7 +43,7 @@ function process_single_arg() {
 function directory_backup() {
   date=`date '+%Y%m%d_%H%M%S'`
   cp -r '../dist/' '../dist_'${date}
-  cp -r '../bin/' '../dist_'${date}
+  cp -r '../scripts/' '../dist_'${date}
 }
 
 # process
@@ -55,5 +55,6 @@ process_single_arg 'binarization' ${binarization_threshold}
 process 'morphology'
 process 'gaussian'
 process_single_arg 'binarization' ${binarization_threshold}
+process 'crop'
 
 directory_backup
