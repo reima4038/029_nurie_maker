@@ -49,7 +49,10 @@ process 'gaussian'
 process 'edge'
 process 'binarization' $BINARIZATION_THRESHOLD
 process 'morphology'
-process 'crop'
+process 'crop' $CROP_RESIZE \
+  $CROP_GRAVITY \
+  $CROP_EXTENT \
+  $CROP_BACKGROUND
 process 'ext_convert'
 
 directory_backup
