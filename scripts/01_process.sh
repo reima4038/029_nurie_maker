@@ -2,17 +2,17 @@
 
 # properties
 binarization_threshold='40000'
-target_file_name='karas_logo_02'
+target_file_name='karas_logo_02.jpg'
 
 # def
 org_dir='../org/'
 dist_dir='../dist/'
+filename=${target_file_name%.*}
+ext=.${target_file_name##*.}
 
-ext='.jpg'
-
-org_file=${org_dir}${target_file_name}${ext}
-input_file=${dist_dir}${target_file_name}${ext}
-output_file=${dist_dir}${target_file_name}${ext}
+org_file=${org_dir}${filename}${ext}
+input_file=${dist_dir}${filename}${ext}
+output_file=${dist_dir}${filename}${ext}
 
 # function
 
@@ -28,7 +28,7 @@ function preprocessing() {
 function process() {
   # $1: process_name
   ./$1.sh ${input_file} ${output_file}
-  cp ${output_file} ${dist_dir}${target_file_name}$1${ext}
+  cp ${output_file} ${dist_dir}${filename}$1${ext}
   read -p "$1 processing is done."
 }
 
@@ -36,7 +36,7 @@ function process_single_arg() {
   # $1: process_name
   # #2: argument
   ./$1.sh $2 ${input_file} ${output_file}
-  cp ${output_file} ${dist_dir}${target_file_name}$1${ext}
+  cp ${output_file} ${dist_dir}${filename}$1${ext}
   read -p "$1 processing is done."
 }
 
@@ -53,8 +53,7 @@ process 'gaussian'
 process 'edge'
 process_single_arg 'binarization' ${binarization_threshold}
 process 'morphology'
-process 'gaussian'
-process_single_arg 'binarization' ${binarization_threshold}
 process 'crop'
+process 'ext_convert'
 
 directory_backup
